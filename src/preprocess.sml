@@ -427,6 +427,8 @@ struct
             (predicate, NAT_ZERO)
        | ((Id "NAT_SUCC")::[Id predicate]) =>
             (predicate, NAT_SUCC)
+       | ((Id "WRITE")::[Id predicate]) =>
+            (predicate, WRITE)
        | _ => raise IllFormed
 
 

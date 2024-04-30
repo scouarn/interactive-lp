@@ -600,8 +600,12 @@ fun possible_steps stage prog =
 
 fun add_to_ctx gsubst bi ((mode, a, ps), ({next, concrete}, xs)) = 
   let
-    val atom = (mode, a, valOf (ground_terms_partial bi gsubst ps [])
-                         handle Option => raise Fail "non-ground --> ctx")
+    val terms = valOf (ground_terms_partial bi gsubst ps [])
+                handle Option => raise Fail "non-ground --> ctx"
+    val atom = (mode, a, terms)
+    val () = case M.find bi a of
+             SOME C.WRITE => print (String.concatWith " " (map C.termToString terms) ^ "\n")
+           | _ => ()
   in
     ({next = next + 1, 
       concrete = (next, atom) :: concrete},

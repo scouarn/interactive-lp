@@ -303,7 +303,7 @@ struct
                   S.find signat (S.BUILTIN, "NAT_SUCC"),
                   S.find signat (S.BUILTIN, "NAT")) of
                (_, _, NONE) => raise Fail "NAT builtin not yet defined"
-             | (_, SOME _, _) => raise Fail "NAT_ZERO builtin already defined"
+             | (_, SOME _, _) => raise Fail "NAT_SUCC builtin already defined"
              | (SOME (S.ConstDecl (_, [nat1], nat2)), NONE,
                 SOME (S.BuiltinDecl (declared_nat, Ceptre.NAT))) => 
                  (if nat1 = declared_nat andalso nat1 = nat2
@@ -312,6 +312,11 @@ struct
              | (SOME (S.ConstDecl _), NONE, _) =>
                   raise Fail "NAT_SUCC builtin must have one argument"
              | (decl, NONE, _) => expectedNot c "constant" decl)
+       | CS.CBuiltin (c, Ceptre.WRITE) =>
+           (case S.find signat (S.PRED, c) of
+             SOME (S.PredDecl (_, [], _)) => raise Fail "WRITE builtin must have at least one argument"
+           | SOME (S.PredDecl (_, _, Ceptre.Act)) => S.BuiltinDecl (c, Ceptre.WRITE)
+           | decl => expectedNot c "action predicate" decl)
        | CS.CStageMode (stage, nondet_mode) => 
            (case S.find signat (S.STAGE, stage) of
                SOME (S.StageDecl _) => S.StageModeDecl (stage, nondet_mode)

@@ -4,7 +4,7 @@ syn clear
 set iskeyword+=\",~,@,!,#-',*-45,47-57,59-90,94-122,\|,^:
 
 syn keyword ceptrePercentKey #mode #interactive #trace #builtin
-syn keyword ceptreType type pred bwd stage context
+syn keyword ceptreType type pred action bwd stage context
 syn match ceptrePunct ":\|\.\|="
 syn match ceptreFVar "\<[A-Z_]\k*\>"  
 syn keyword ceptreSymbol -> <- -o o- *

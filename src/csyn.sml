@@ -217,8 +217,8 @@ struct
        (* Sensing and acting predicates - should handle this some way other than
         * keyword.
         | P.Decl (P.Ascribe (dc, P.Id "sense")) => CPred (extractCls dc C.Sense)
-        | P.Decl (P.Ascribe (dc, P.Id "action")) => CPred (extractCls dc C.Act)
        *)
+       | P.Decl (P.Ascribe (dc, P.Id "action")) => CPred (extractCls dc C.Act)
 
        | P.Decl (P.Ascribe (dc, class)) => extractDecl types dc class
        | P.Decl syn => extractDecl types (P.Id (gensym ())) syn 
@@ -253,6 +253,8 @@ struct
                           CBuiltin (const, C.NAT_ZERO)
                      | [ P.Id "NAT_SUCC", P.Id const ] => 
                           CBuiltin (const, C.NAT_SUCC)
+                     | [ P.Id "WRITE", P.Id const ] => 
+                          CBuiltin (const, C.WRITE)
                      | _ => raise Fail "Format: #builtin <builtin> <ident>")
               | "interactive" =>
                    (case args of

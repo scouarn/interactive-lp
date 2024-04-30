@@ -49,6 +49,7 @@ struct
        | BuiltinDecl (id, Ceptre.NAT) => "#builtin NAT "^id
        | BuiltinDecl (id, Ceptre.NAT_ZERO) => "#builtin NAT_ZERO "^id
        | BuiltinDecl (id, Ceptre.NAT_SUCC) => "#builtin NAT_SUCC "^id
+       | BuiltinDecl (id, Ceptre.WRITE) => "#builtin WRITE "^id
        | StageModeDecl (id, Ceptre.Interactive) => "#interactive "^id^"."
        | StageModeDecl (id, _) => "???"
 
@@ -65,6 +66,7 @@ struct
        | BuiltinDecl (_, Ceptre.NAT) => (BUILTIN, "NAT")
        | BuiltinDecl (_, Ceptre.NAT_ZERO) => (BUILTIN, "NAT_ZERO")
        | BuiltinDecl (_, Ceptre.NAT_SUCC) => (BUILTIN, "NAT_SUCC")
+       | BuiltinDecl (_, Ceptre.WRITE) => (BUILTIN, "WRITE")
        | StageModeDecl _ => (NOTHING, "#interactive?")
 
    fun describe topdecl = 
