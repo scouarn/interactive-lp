@@ -96,7 +96,7 @@ struct
        | P.Wild () => Var NONE
        | P.App (P.Id f, args) => Fn (f, map extractTerm args)
        | P.Num i => ILit i
-       (* TODO: Add string literals once they're parsed? *)
+       | P.Str s => SLit s
        | _ => raise Fail ("Cannot parse as term: "^P.synToString syn) 
 
    fun extractAtom (perm, syn) = 
@@ -255,6 +255,9 @@ struct
                           CBuiltin (const, C.NAT_SUCC)
                      | [ P.Id "WRITE", P.Id const ] => 
                           CBuiltin (const, C.WRITE)
+                     | [ P.Id "STRING", P.Id const ] => 
+                          CBuiltin (const, C.STRING)
+                     | [ P.Id id, _ ] => raise Fail ("Unknown builtin '" ^ id ^ "'")
                      | _ => raise Fail "Format: #builtin <builtin> <ident>")
               | "interactive" =>
                    (case args of
