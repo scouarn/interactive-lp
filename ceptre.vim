@@ -10,12 +10,15 @@ syn match ceptreFVar "\<[A-Z_]\k*\>"
 syn keyword ceptreSymbol -> <- -o o- *
 syn match ceptreDecl "^\s*[^()A-Z_]\k*\s*:" contains=ceptrePunct
 
+syn match ceptreNumber "0\|[1-9]\d*"
+syn match ceptreEsc "\\."
+syn region ceptreString start="\"" end="\"" contains=ceptreEsc
 
 syn match ceptreCurly "{\|}" contained
 syn match ceptreSquare "\[\|\]" contained
 syn match ceptreBindDecl "[^A-Z_{\[]\k*\s*:" contains=ceptrePunct contained
-syn region ceptrePiBind start="{" end="}" keepend transparent contains=ceptreCurly,ceptrePunct,ceptreFVar,ceptreSymbol,ceptreType,ceptreBindDecl,ceptreComment
-syn region ceptreLamBind start="\[" end="\]" keepend transparent contains=ceptreSquare,ceptrePunct,ceptreFVar,ceptreSymbol,ceptreType,ceptreBindDecl,ceptreComment
+syn region ceptrePiBind start="{" end="}" keepend transparent contains=ceptreCurly,ceptrePunct,ceptreFVar,ceptreSymbol,ceptreType,ceptreBindDecl,ceptreComment,ceptreNumber,ceptreString
+syn region ceptreLamBind start="\[" end="\]" keepend transparent contains=ceptreSquare,ceptrePunct,ceptreFVar,ceptreSymbol,ceptreType,ceptreBindDecl,ceptreComment,ceptreNumber,ceptreString
 
 syn match ceptreParen "(\|)" contained
 syn region ceptreParens start="(" end=")" transparent contains=ALL
@@ -38,6 +41,9 @@ hi link ceptreSymbol            Operator
 hi link ceptreDecl              Identifier
 hi link ceptreBindDecl          ceptreDeclarationFace
 hi link ceptreFVar              Identifier
+hi link ceptreNumber            Number
+hi link ceptreEsc               SpecialChar
+hi link ceptreString            String
 
 " Indentation
 setlocal foldmethod=syntax
